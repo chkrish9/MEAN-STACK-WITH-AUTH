@@ -6,6 +6,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const router = require('./routes/routes');
+const passportConfig = require('./config/passport');
 
 //DB Connection
 mongoose.connect(config.database);
@@ -28,8 +29,14 @@ app.use(cors());
 
 //Static folder
 app.use(express.static(path.join(__dirname, 'public')));
+
 //Body parser
 app.use(bodyParser.json());
+
+//Passport
+app.use(passport.initialize());
+app.use(passport.session());
+passportConfig.configJWTStrategy(passport);
 
 router(app);
 

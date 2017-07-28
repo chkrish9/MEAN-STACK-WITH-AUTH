@@ -1,3 +1,4 @@
 module.exports = {
-    database : 'mongodb://localhost:27017/meanstackauth'
+    database : 'mongodb://localhost:27017/meanstackauth',
+    secret : 'apple'
 }
