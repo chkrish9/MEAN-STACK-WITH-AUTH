@@ -1,0 +1,11 @@
+{
+  "name": "mean-stack",
+  "version": "1.0.0",
+  "description": "Mean stack with user module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Murali",
+  "license": "ISC"
+}
