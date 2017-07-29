@@ -1,10 +1,11 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
+const User = require('../models/user');
 
 module.exports.configFbStrategy = function(app,passport){
     let token;
-    let isDev = false;
+    let isDev = true;
     let clientUrl=null;
     let serverUrl=null;
 
@@ -37,7 +38,30 @@ module.exports.configFbStrategy = function(app,passport){
     },
     function(accessToken, refreshToken, profile, done) {
         console.log(profile);
-        done(null, profile);
+        User.getUserByEmail(profile. _json.email, (err, user)=>{
+            if(err){
+                return done(err, false);
+            }
+            if(user){
+                return done(null, user);
+            }else{
+                let newUser = new User({
+                    name : profile. _json.name,
+                    email : profile. _json.email,
+                    username : profile. _json.name,
+                    password : ""
+                });
+
+                User.addUser(newUser, (err, user) =>{
+                    if(err){
+                        return done(err, false);
+                    }else{
+                        return done(null, user);
+                    }
+                });
+            }
+        });
+       
     }
     ));
 
