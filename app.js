@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 const router = require('./routes/routes');
 const passportConfig = require('./config/passport');
-const passportFbConfig = require('./config/passport-fb');
 
 //DB Connection
 mongoose.connect(config.database);
@@ -37,9 +36,7 @@ app.use(bodyParser.json());
 //Passport
 app.use(passport.initialize());
 app.use(passport.session());
-passportConfig.configJWTStrategy(passport);
-//Fb
-passportFbConfig.configFbStrategy(app,passport);
+passportConfig.configStrategy(app,passport);
 
 router(app);
 
