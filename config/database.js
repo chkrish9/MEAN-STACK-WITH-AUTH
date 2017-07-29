@@ -1,4 +1,6 @@
 module.exports = {
     database : 'mongodb://localhost:27017/meanstackauth',
-    secret : 'apple'
+    secret : 'JWT_secret',
+    clientId: 'FB_clientId',
+    clientSecret: 'FB_clientSecret',
 }

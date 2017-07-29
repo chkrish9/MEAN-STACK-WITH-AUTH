@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 const router = require('./routes/routes');
 const passportConfig = require('./config/passport');
+const passportFbConfig = require('./config/passport-fb');
 
 //DB Connection
 mongoose.connect(config.database);
@@ -37,11 +38,14 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig.configJWTStrategy(passport);
+//Fb
+passportFbConfig.configFbStrategy(app,passport);
 
 router(app);
 
-app.get("/", (req, res)=>{
-    res.send("Hello");
+//Required for navigating angular routes without server routes
+app.all('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 //Start server

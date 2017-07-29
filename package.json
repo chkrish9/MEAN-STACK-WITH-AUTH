@@ -14,9 +14,11 @@
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "express": "^4.15.3",
+    "express-session": "^1.15.4",
     "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.11.4",
     "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
     "passport-jwt": "^2.2.1"
   }
 }

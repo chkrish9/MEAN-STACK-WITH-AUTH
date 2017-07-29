@@ -17,10 +17,12 @@ import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
 
 import { AuthGuard } from './guards/auth.guard';
+import { PassportComponent } from './components/passport/passport.component';
 
 const appRoutes : Routes = [
     {path : '', component: LoginComponent },
     {path : 'register', component: RegisterComponent },
+    {path : 'passport/:token', component: PassportComponent },
     {path : 'home', component: HomeComponent, canActivate:[AuthGuard] },
     {path : 'profile', component: ProfileComponent, canActivate:[AuthGuard] },  
 ];
@@ -32,7 +34,8 @@ const appRoutes : Routes = [
     ProfileComponent,
     NavbarComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PassportComponent
   ],
   imports: [
     BrowserModule,
