@@ -19,9 +19,6 @@ module.exports.configStrategy = function(app, passport){
     if(isDev){
         serverUrl="http://localhost:3000";
         clientUrl="http://localhost:4200";
-    }else if(isProd){
-        serverUrl=" https://meanstack-todos.herokuapp.com/";
-        clientUrl=" https://meanstack-todos.herokuapp.com/";
     }else{
         serverUrl="";
         clientUrl="";
