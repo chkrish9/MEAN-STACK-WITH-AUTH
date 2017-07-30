@@ -16,7 +16,7 @@ export class PassportComponent implements OnInit {
   ) { 
     this.route.params.subscribe((token: any) => {
       if (token) {
-         this.authService.storeUserData(token.token, null);
+         this.authService.storeUserData(token.token, token.user);
          this.router.navigate(['home']);
       }
     });

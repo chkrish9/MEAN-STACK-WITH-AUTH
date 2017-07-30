@@ -10,7 +10,7 @@ export class AuthService {
   isDev:boolean;
 
   constructor(private http:Http) {
-     this.isDev = true;
+     this.isDev = false;
   }
 
   registerUser(user){
@@ -40,12 +40,13 @@ export class AuthService {
 
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', (typeof(user)==="string")?user:JSON.stringify(user));
     this.authToken = token;
     this.user = user;
   }
 
   loggedIn(){
+    this.loadToken();
     return tokenNotExpired(null,this.authToken);
   }
 
@@ -70,6 +71,10 @@ export class AuthService {
     this.authToken = token;
   }
 
+  loadUser(){
+    const user = localStorage.getItem('user');
+    return user;
+  }
   prepEndpoint(ep){
     if(!this.isDev){
       return ep;

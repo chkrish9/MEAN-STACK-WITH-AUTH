@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 const router = require('./routes/routes');
 const passportConfig = require('./config/passport');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 //DB Connection
 mongoose.connect(config.database);
@@ -22,7 +24,7 @@ mongoose.connection.on('error', (err) => {
 const app = express();
 
 //Port numb
-const port = 3000;
+var port = process.env.PORT || 3000;
 
 //Cors 
 app.use(cors());
@@ -33,10 +35,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Body parser
 app.use(bodyParser.json());
 
+app.use(cookieParser());
+app.use(session({
+  secret: config.secret,
+  resave: false,
+  saveUninitialized: false,
+  //cookie: { secure: true }
+}))
+
 //Passport
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig.configStrategy(app,passport);
+
+    
+
 
 router(app);
 

@@ -1,3 +1,60 @@
-<p>
-  home works!
-</p>
+ 
+ <div class="container">
+    <div class="row margin-bottom-20">
+        <div class="col-sm-3">
+        </div> 
+        <div class="col-sm-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="what you want to do today..?" [(ngModel)]="task">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary hidden-xs" type="button" (click)="onAddClick()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+                    <button class="btn btn-primary visible-xs" type="button" (click)="onAddClick()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-3">
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Completed ?</th>
+                        <th>Todo</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let todo of todos">
+                        <td>
+                            <div class="checkbox checkbox-primary">
+                                <input [id]="todo._id" type="checkbox" [checked]="todo.isCompleted" (click)="onCompletedTask(todo)">
+                                <label [attr.for]="todo._id">
+                                    &nbsp;
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                             <span *ngIf="!todo.isEditing" class="todos_task" [ngClass]="{ 'todos_task-completed ' : todo.isCompleted }">
+                                {{ todo.task }}
+                            </span>
+                            <input type="text" *ngIf="todo.isEditing" class="form-control todos_update-input" (ngModelChange)="updateTask($event,todo)" name="todo.updatedValue" [(ngModel)]="todo.updatedValue"/>
+                        </td>
+                        <td>
+                            <button type="button" *ngIf="!todo.isEditing" class="btn btn-info hidden-xs" (click)="onEditClick(todo)"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</button>
+                            <button type="button" *ngIf="!todo.isEditing" class="btn btn-info visible-xs" (click)="onEditClick(todo)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                            <button type="button" *ngIf="!todo.isEditing" class="btn btn-danger hidden-xs" (click)="onDeleteClick(todo)"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</button>
+                            <button type="button" *ngIf="!todo.isEditing" class="btn btn-danger visible-xs" (click)="onDeleteClick(todo)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            <button type="button" *ngIf="todo.isEditing" class="btn btn-primary hidden-xs" (click)="onSaveClick(todo)"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                            <button type="button" *ngIf="todo.isEditing" class="btn btn-primary visible-xs" (click)="onSaveClick(todo)"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                            <button type="button" *ngIf="todo.isEditing" class="btn btn-danger hidden-xs" (click)="onCancelClick(todo)"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancel</button>
+                            <button type="button" *ngIf="todo.isEditing" class="btn btn-danger visible-xs" (click)="onCancelClick(todo)"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ </div>
+ 

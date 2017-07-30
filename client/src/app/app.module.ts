@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { TodoService } from './services/todo.service';
 
 import { AuthGuard } from './guards/auth.guard';
 import { PassportComponent } from './components/passport/passport.component';
@@ -22,7 +23,7 @@ import { PassportComponent } from './components/passport/passport.component';
 const appRoutes : Routes = [
     {path : '', component: LoginComponent },
     {path : 'register', component: RegisterComponent },
-    {path : 'passport/:token', component: PassportComponent },
+    {path : 'passport/:token/:user', component: PassportComponent },
     {path : 'home', component: HomeComponent, canActivate:[AuthGuard] },
     {path : 'profile', component: ProfileComponent, canActivate:[AuthGuard] },  
 ];
@@ -45,7 +46,12 @@ const appRoutes : Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ ValidateService, AuthService, AuthGuard ],
+  providers: [ 
+    ValidateService,
+    AuthService,
+    AuthGuard,
+    TodoService 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

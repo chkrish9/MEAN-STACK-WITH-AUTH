@@ -11,7 +11,7 @@ const config = require('../config/database');
 module.exports.configStrategy = function(app, passport){
     let opts = {};
     let token;
-    let isDev = true;
+    let isDev = false;
     let clientUrl=null;
     let serverUrl=null;
 
@@ -43,7 +43,7 @@ module.exports.configStrategy = function(app, passport){
         token = jwt.sign(user, config.secret, {
                      expiresIn : 604800 //1week
                  });
-        done(null, token);
+        done(null, user);
     });
 
     passport.deserializeUser(function(id, done) {
@@ -91,7 +91,7 @@ module.exports.configStrategy = function(app, passport){
         clientID: config.fbClientId,
         clientSecret: config.fbClientSecret,
         callbackURL: serverUrl+"/auth/facebook/callback",
-        profileFields: ['id', 'displayName', 'photos', 'email','birthday'],
+        profileFields: ['id', 'displayName', 'picture.type(large)', 'email','birthday'],
         enableProof: true
     },
     function(accessToken, refreshToken, profile, done) {
@@ -130,14 +130,26 @@ module.exports.configStrategy = function(app, passport){
     app.get('/auth/google/callback', 
         passport.authenticate('google', { failureRedirect: '/' }),(req, res)=> {
         // Successful authentication, redirect home.
-        res.redirect(clientUrl+'/passport/'+'JWT '+token);
+        let user = {
+            id : req.user._id,
+            name : req.user.name,
+            username : req.user.username,
+            email : req.user.email
+        }
+        res.redirect(clientUrl+'/passport/'+'JWT '+token+'/'+JSON.stringify(user));
     });
 
     //FB routes
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/' }),(req, res)=> {
         // Successful authentication, redirect home.
-        res.redirect(clientUrl+'/passport/'+'JWT '+token);
+        let user = {
+            id : req.user._id,
+            name : req.user.name,
+            username : req.user.username,
+            email : req.user.email
+        }
+        res.redirect(clientUrl+'/passport/'+'JWT '+token+'/'+JSON.stringify(user));
     });
 
     app.get('/auth/facebook',
