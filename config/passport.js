@@ -12,12 +12,16 @@ module.exports.configStrategy = function(app, passport){
     let opts = {};
     let token;
     let isDev = false;
+    let isProd = true;
     let clientUrl=null;
     let serverUrl=null;
 
     if(isDev){
         serverUrl="http://localhost:3000";
         clientUrl="http://localhost:4200";
+    }if(isProd){
+        serverUrl=" https://meanstack-todos.herokuapp.com/";
+        clientUrl=" https://meanstack-todos.herokuapp.com/";
     }else{
         serverUrl="";
         clientUrl="";
