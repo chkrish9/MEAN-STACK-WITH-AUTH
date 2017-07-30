@@ -57,7 +57,7 @@ module.exports.configStrategy = function(app, passport){
     passport.use(new GoogleStrategy({
         clientID: config.gpClientId,
         clientSecret: config.gpClientSecret,
-        callbackURL: serverUrl+"/auth/google/callback"
+        callbackURL: "https://meanstack-todos.herokuapp.com/auth/google/callback"
     },
     function(token, tokenSecret, profile, done) {
        //console.log(profile);
@@ -91,7 +91,7 @@ module.exports.configStrategy = function(app, passport){
     passport.use(new FacebookStrategy({
         clientID: config.fbClientId,
         clientSecret: config.fbClientSecret,
-        callbackURL: serverUrl+"/auth/facebook/callback",
+        callbackURL: "https://meanstack-todos.herokuapp.com/auth/facebook/callback",
         profileFields: ['id', 'displayName', 'picture.type(large)', 'email','birthday'],
         enableProof: true
     },
@@ -125,10 +125,10 @@ module.exports.configStrategy = function(app, passport){
     ));
 
     //Google+ routes
-    app.get('/auth/google',
+    app.get('https://meanstack-todos.herokuapp.com/auth/google',
     passport.authenticate('google', { scope: ['profile','email'] }));
 
-    app.get('/auth/google/callback', 
+    app.get('https://meanstack-todos.herokuapp.com/auth/google/callback', 
         passport.authenticate('google', { failureRedirect: '/' }),(req, res)=> {
         // Successful authentication, redirect home.
         let user = {
@@ -141,7 +141,7 @@ module.exports.configStrategy = function(app, passport){
     });
 
     //FB routes
-    app.get('/auth/facebook/callback',
+    app.get('https://meanstack-todos.herokuapp.com/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/' }),(req, res)=> {
         // Successful authentication, redirect home.
         let user = {
@@ -153,7 +153,7 @@ module.exports.configStrategy = function(app, passport){
         res.redirect(clientUrl+'/passport/'+'JWT '+token+'/'+JSON.stringify(user));
     });
 
-    app.get('/auth/facebook',
+    app.get('https://meanstack-todos.herokuapp.com/auth/facebook',
         passport.authenticate('facebook', { scope: 'email' })
     );
 }
