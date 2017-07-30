@@ -1,5 +1,5 @@
 module.exports = {
-    database : 'mongodb://localhost:27017/meanstackauth',
+    database : 'mongodb://admin:admin@ds149122.mlab.com:49122/meanstackauth',
     secret : 'apple',
     fbClientId: '107472193257066',
     fbClientSecret: '0ad67ffcef0e966807db5734e8fc6859',
