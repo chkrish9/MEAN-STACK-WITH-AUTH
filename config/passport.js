@@ -125,10 +125,10 @@ module.exports.configStrategy = function(app, passport){
     ));
 
     //Google+ routes
-    app.get('https://meanstack-todos.herokuapp.com/auth/google',
+    app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile','email'] }));
 
-    app.get('https://meanstack-todos.herokuapp.com/auth/google/callback', 
+    app.get('/auth/google/callback', 
         passport.authenticate('google', { failureRedirect: '/' }),(req, res)=> {
         // Successful authentication, redirect home.
         let user = {
@@ -141,7 +141,7 @@ module.exports.configStrategy = function(app, passport){
     });
 
     //FB routes
-    app.get('https://meanstack-todos.herokuapp.com/auth/facebook/callback',
+    app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/' }),(req, res)=> {
         // Successful authentication, redirect home.
         let user = {
@@ -153,7 +153,7 @@ module.exports.configStrategy = function(app, passport){
         res.redirect(clientUrl+'/passport/'+'JWT '+token+'/'+JSON.stringify(user));
     });
 
-    app.get('https://meanstack-todos.herokuapp.com/auth/facebook',
+    app.get('/auth/facebook',
         passport.authenticate('facebook', { scope: 'email' })
     );
 }
