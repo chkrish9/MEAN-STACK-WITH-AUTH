@@ -5,7 +5,11 @@
 th,td{
     text-align: center;
 }
-
+.footer{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
 .margin-bottom-5px{
   margin-bottom: 5px;
 }

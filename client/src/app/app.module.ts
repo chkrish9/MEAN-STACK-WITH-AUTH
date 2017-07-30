@@ -19,6 +19,7 @@ import { TodoService } from './services/todo.service';
 
 import { AuthGuard } from './guards/auth.guard';
 import { PassportComponent } from './components/passport/passport.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 const appRoutes : Routes = [
     {path : '', component: LoginComponent },
@@ -36,7 +37,8 @@ const appRoutes : Routes = [
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
-    PassportComponent
+    PassportComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
