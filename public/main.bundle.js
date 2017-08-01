@@ -282,13 +282,9 @@ var HomeComponent = (function () {
             todo.updatedValue = todo.task;
         };
         this.onDeleteClick = function (todo) {
-            _this.todoService.deleteTodo(todo._id, todo.email).subscribe(function (status) {
+            _this.todoService.deleteTodo(todo._id, todo.email).subscribe(function (todos) {
                 //console.log(success);
-                if (status.success) {
-                    _this.todos = _this.todos.filter(function (obj) {
-                        return todo._id != obj._id;
-                    });
-                }
+                _this.todos = todos;
             }, function (error) {
                 console.log("Error occured at on save click method", error);
             });
@@ -383,7 +379,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-sm-4 col-sm-offset-4\">\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <h2 class=\"page-header\">Login</h2>\n      <form (submit)=\"onLoginSubmit()\">\n        <div class=\"form-group\">\n          <label>Username</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"username\" name=\"username\">\n        </div>\n        <div class=\"form-group\">\n          <label>Password</label>\n          <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\n        </div>\n        <div class=\"row\">\n          <div class=\"col-sm-4 col-sm-offset-4\">\n            <input type=\"submit\" class=\"btn btn-primary form-control\" value=\"Login\">\n          </div>\n        </div>\n      </form>\n    </div>\n  </div>\n  <hr/>\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <div class=\"row\">\n        <div class=\"col-sm-12\">\n          <a href=\"https://meanstack-todos.herokuapp.com/auth/facebook\" class=\"btn btn-primary margin-bottom-5px form-control\"><span class=\"fa fa-facebook\"></span> Facebook</a>\n        </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-sm-12\">\n          <a href=\"https://meanstack-todos.herokuapp.com/auth/google\" class=\"btn btn-danger form-control\"><span class=\"fa fa-google-plus-official\"></span> Google +</a>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"col-sm-4 col-sm-offset-4\">\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <h2 class=\"page-header\">Login</h2>\n      <form (submit)=\"onLoginSubmit()\">\n        <div class=\"form-group\">\n          <label>Username</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"username\" name=\"username\">\n        </div>\n        <div class=\"form-group\">\n          <label>Password</label>\n          <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\n        </div>\n        <div class=\"row\">\n          <div class=\"col-sm-4 col-sm-offset-4\">\n            <input type=\"submit\" class=\"btn btn-primary form-control\" value=\"Login\">\n          </div>\n        </div>\n      </form>\n    </div>\n  </div>\n  <hr/>\n  <div class=\"row\">\n    <div class=\"col-sm-12\">\n      <div class=\"row\">\n        <div class=\"col-sm-12\">\n          <a href=\"/auth/facebook\" class=\"btn btn-primary margin-bottom-5px form-control\"><span class=\"fa fa-facebook\"></span> Facebook</a>\n        </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-sm-12\">\n          <a href=\"/auth/google\" class=\"btn btn-danger form-control\"><span class=\"fa fa-google-plus-official\"></span> Google +</a>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 

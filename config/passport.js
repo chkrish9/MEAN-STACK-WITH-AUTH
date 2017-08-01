@@ -6,23 +6,27 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const User = require('../models/user');
 const config = require('../config/database');
 
-
-
 module.exports.configStrategy = function(app, passport){
     let opts = {};
     let token;
     let isDev = false;
-    let isProd = true;
+    let isProd = false;
     let clientUrl=null;
     let serverUrl=null;
 
     if(isDev){
         serverUrl="http://localhost:3000";
         clientUrl="http://localhost:4200";
+    }else if(isProd){
+        serverUrl="https://meanstack-todos.herokuapp.com";
+        clientUrl="";
     }else{
-        serverUrl="";
+        serverUrl="http://localhost:3000";
         clientUrl="";
     }
+    
+
+    //app.use(session({resave: true, saveUninitialized: true, secret: 'SOMERANDOMSECRETHERE', cookie: { maxAge: 60000 }}));
 
     //Local
     opts.jwtFromRequest = ExtractJwt.fromAuthHeader();
@@ -41,9 +45,6 @@ module.exports.configStrategy = function(app, passport){
     }));
 
     passport.serializeUser(function(user, done) {
-        token = jwt.sign(user, config.secret, {
-                     expiresIn : 604800 //1week
-                 });
         done(null, user);
     });
 
@@ -54,10 +55,11 @@ module.exports.configStrategy = function(app, passport){
     });
 
     //Google+ Stratagy
+
     passport.use(new GoogleStrategy({
         clientID: config.gpClientId,
         clientSecret: config.gpClientSecret,
-        callbackURL: "https://meanstack-todos.herokuapp.com/auth/google/callback"
+        callbackURL: serverUrl+"/auth/google/callback"
     },
     function(token, tokenSecret, profile, done) {
        //console.log(profile);
@@ -88,12 +90,12 @@ module.exports.configStrategy = function(app, passport){
     ));
 
     //FB Stratagy
+
     passport.use(new FacebookStrategy({
         clientID: config.fbClientId,
         clientSecret: config.fbClientSecret,
-        callbackURL: "https://meanstack-todos.herokuapp.com/auth/facebook/callback",
+        callbackURL: serverUrl+"/auth/facebook/callback",
         profileFields: ['id', 'displayName', 'picture.type(large)', 'email','birthday'],
-        enableProof: true
     },
     function(accessToken, refreshToken, profile, done) {
         //console.log(profile);
@@ -137,6 +139,9 @@ module.exports.configStrategy = function(app, passport){
             username : req.user.username,
             email : req.user.email
         }
+        token = jwt.sign(req.user, config.secret, {
+                     expiresIn : 604800 //1week
+                 });
         res.redirect(clientUrl+'/passport/'+'JWT '+token+'/'+JSON.stringify(user));
     });
 
@@ -150,6 +155,9 @@ module.exports.configStrategy = function(app, passport){
             username : req.user.username,
             email : req.user.email
         }
+        token = jwt.sign(req.user, config.secret, {
+                     expiresIn : 604800 //1week
+                 });
         res.redirect(clientUrl+'/passport/'+'JWT '+token+'/'+JSON.stringify(user));
     });
 

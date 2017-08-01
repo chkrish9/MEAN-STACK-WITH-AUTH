@@ -9,6 +9,7 @@ const router = require('./routes/routes');
 const passportConfig = require('./config/passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
 //DB Connection
 mongoose.connect(config.database);
@@ -29,26 +30,26 @@ var port = process.env.PORT || 3000;
 //Cors 
 app.use(cors());
 
-//Static folder
-app.use(express.static(path.join(__dirname, 'public')));
-
 //Body parser
 app.use(bodyParser.json());
 
 app.use(cookieParser());
-app.use(session({
-  secret: config.secret,
-  resave: false,
-  saveUninitialized: false,
-  //cookie: { secure: true }
-}))
+
+//Static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Passport
+app.use(session({
+  secret: 'mysupersecret', 
+  resave: true, 
+  saveUninitialized: true,
+  store: new MongoStore({ mongooseConnection: mongoose.connection,ttl: (1 * 60 * 60) }),
+  cookie: { maxAge: 3600000,secure: false, httpOnly: true }
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig.configStrategy(app,passport);
-
-    
 
 
 router(app);

@@ -2,9 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 var Todo = require('../../models/todo');
-
+var session = require('express-session');
 //retriving todos
 router.get('/todos/:email', (req, res, next) => {
+    console.log(req.user);
+    req.session.email=req.params.email;
     Todo.getTodos(req.params.email,(err, todos) => {
         res.json(todos);
     });
@@ -55,7 +57,10 @@ router.delete('/todo/:id/:email', (req, res, next) => {
         if (err) {
             res.json({ msg: 'Failed while deleting contact', status: 'error',success:false });
         } else {
-            res.json({ msg: 'new contact added successfully', success:true });
+           
+            Todo.getTodos(req.session.email,(err, todos) => {
+                    res.json(todos);
+            });
         }
     })
 });

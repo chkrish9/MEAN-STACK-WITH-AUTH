@@ -32,13 +32,9 @@ export class HomeComponent implements OnInit {
   };
 
   onDeleteClick = todo => {
-      this.todoService.deleteTodo(todo._id,todo.email).subscribe(status=>{
+      this.todoService.deleteTodo(todo._id,todo.email).subscribe(todos=>{
         //console.log(success);
-        if(status.success){
-          this.todos = this.todos.filter(function(obj) {
-              return todo._id != obj._id;
-          });
-        }
+       this.todos=todos;
       }, error=>{
         console.log("Error occured at on save click method", error);
       });
