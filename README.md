@@ -17,4 +17,4 @@
 
 ### Screenshots:
 ----------------
-![alt text](https://raw.githubusercontent.com/chkrish9/MEAN-STACK-WITH-AUTH/master/Screenshots/Login.png)
+![alt text](https://raw.githubusercontent.com/chkrish9/MEAN-STACK-WITH-AUTH/master/Screenshots/Login.PNG)
